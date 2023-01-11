@@ -18,6 +18,12 @@ if (isset($_GET["customerid"])) {
     </script>
 <?php }
 
+// default filters
+
+if(!isset($_GET['features'])){
+	$_GET['features'] = "chevron_planks";
+}
+
 // get products
 $products = $product_controller->get_flooring($_GET);
 
@@ -143,7 +149,7 @@ $browser = $helper_controller->get_browser();
                         <div class="grid__child">
                             <div class="feature-box">
                                 <div class="feature-box-icon icon-fix">
-                                    <img data-src="<?php echo IMAGE_PATH;?>assets/product-features/sustainable.png" alt="sustainable flooring" class="feature-image lazyload" width="42" height="42">
+                                    <img data-src="<?php echo IMAGE_PATH;?>assets/features/hand-gesture.png" alt="waterproof" class="feature-image lazyload" width="42" height="42">
                                 </div>
                                 <div class="feature-box-body">
                                     <h3>SUSTAINABLE</h3>
@@ -153,8 +159,8 @@ $browser = $helper_controller->get_browser();
                         </div>
 						<div class="grid__child">
                             <div class="feature-box">
-                                <div class="feature-box-icon icon-fix">
-                                    <img data-src="<?php echo IMAGE_PATH;?>assets/product-features/clean.png" alt="cost effective flooring" class="feature-image lazyload" width="42" height="42">
+                                <div class="feature-box-icon  icon-fix">
+                                    <img data-src="<?php echo IMAGE_PATH;?>assets/features/clean.png" alt="no formaldehyde" class="feature-image lazyload" width="42" height="42">
                                 </div>
                                 <div class="feature-box-body">
                                     <h3>EASY TO CLEAN</h3>
@@ -165,7 +171,7 @@ $browser = $helper_controller->get_browser();
                         <div class="grid__child">
                             <div class="feature-box">
                                 <div class="feature-box-icon icon-fix">
-                                    <img data-src="<?php echo IMAGE_PATH;?>assets/product-features/durable.png" alt="durable flooring" class="feature-image lazyload" width="42" height="42">
+                                    <img data-src="<?php echo IMAGE_PATH;?>assets/features/shield.png" alt="no formaldehyde" class="feature-image lazyload" width="42" height="42">
                                 </div>
                                 <div class="feature-box-body">
                                     <h3>EXTREMELY DURABLE</h3>
@@ -176,7 +182,7 @@ $browser = $helper_controller->get_browser();
                         <div class="grid__child">
                             <div class="feature-box">
                                 <div class="feature-box-icon icon-fix">
-                                    <img data-src="<?php echo IMAGE_PATH;?>assets/product-features/family.png" alt="safe for family" class="feature-image lazyload" width="42" height="42">
+                                    <img data-src="<?php echo IMAGE_PATH;?>assets/features/family.png" alt="easy installation" class="feature-image lazyload" width="42" height="42">
                                 </div>
                                 <div class="feature-box-body">
                                     <h3>SAFE FOR YOUR FAMILY</h3>
@@ -187,7 +193,7 @@ $browser = $helper_controller->get_browser();
                         <div class="grid__child">
                             <div class="feature-box">
                                 <div class="feature-box-icon icon-fix">
-                                    <img data-src="<?php echo IMAGE_PATH;?>assets/product-features/deadline.png" alt="long lasting flooring" class="feature-image lazyload" width="42" height="42">
+                                    <img data-src="<?php echo IMAGE_PATH;?>assets/features/shield.png" alt="protective layer" class="feature-image lazyload" width="42" height="42">
                                 </div>
                                 <div class="feature-box-body">
                                     <h3>LONG-LASTING</h3>
@@ -198,7 +204,7 @@ $browser = $helper_controller->get_browser();
                         <div class="grid__child">
                             <div class="feature-box">
                                 <div class="feature-box-icon icon-fix">
-                                    <img data-src="<?php echo IMAGE_PATH;?>assets/product-features/secure-shield.png" alt="easy installation" class="feature-image lazyload" width="42" height="42">
+                                    <img data-src="<?php echo IMAGE_PATH;?>assets/features/hourglass.png" alt="swatches" class="feature-image lazyload" width="42" height="42">
                                 </div>
                                 <div class="feature-box-body">
                                     <h3>GREAT FOR DIY’ERS:</h3>
@@ -209,7 +215,7 @@ $browser = $helper_controller->get_browser();
 						<div class="grid__child">
                             <div class="feature-box">
                                 <div class="feature-box-icon icon-fix">
-                                    <img data-src="<?php echo IMAGE_PATH;?>assets/product-features/swiss-knife.png" alt="versatile" class="feature-image lazyload" width="42" height="42">
+                                    <img data-src="<?php echo IMAGE_PATH;?>assets/features/hammer.png" alt="family" class="feature-image lazyload" width="42" height="42">
                                 </div>
                                 <div class="feature-box-body">
                                     <h3>VERSATILE</h3>
@@ -376,8 +382,8 @@ $browser = $helper_controller->get_browser();
                                     <li>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="floor_features[]" value="tg_tab">
-                                                <span class="filter-name">Solid T&G (nail or glue down)</span>
+                                            <input type="checkbox" name="floor_features[]" value="tg_tab">
+								            <span class="filter-name">Solid T&G (nail or glue down)</span>
                                             </label>
                                         </div>
                                     </li>
@@ -432,7 +438,7 @@ $browser = $helper_controller->get_browser();
                                     <li>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="floor_features[]" value="chevron_planks">
+                                                <input <?php if(isset($_GET['features'])){if($_GET['features'] == "chevron_planks"){echo "checked";}} ?> type="checkbox" name="floor_features[]" value="chevron_planks">
                                                 <span class="filter-name">Chevron Planks</span>
                                             </label>
                                         </div>
@@ -755,13 +761,13 @@ $browser = $helper_controller->get_browser();
                                             ?>
 											<div class="product-price-number price_hide">
 												<?php
-												//echo '<span class="price-label">Stand Retail Price:</span>
-												//	$'.$helper_controller->product_price($product['price']).'
-												//	<span class="price_type">per '.strtolower($product["price_type"]).'</span>';
+												echo '<span class="price-label">Stand Retail Price:</span>
+													$'.$helper_controller->product_price($product['price']).'
+													<span class="price_type">per '.strtolower($product["price_type"]).'</span>';
 												echo '<div class="product-discounted-price-number product-price-number">
-														<span class="price-label">Your Wholesale Price:</span>
+														<span class="price-label">Your Custom Wholesale Price:</span>
 														$'.$helper_controller->product_price($product['sales_price']).'
-														<span class="price-label">per '.strtolower($product["price_type"]).'</span>
+														<span class="price_type">per '.strtolower($product["price_type"]).'</span>
 													</div>';
 												?>
 											</div>
@@ -889,7 +895,7 @@ $browser = $helper_controller->get_browser();
 			<div class="row second-row">
 				<div class="col-md-6">
 					<h2 class="section-title">What is Bamboo Wood Flooring?</h2>
-					<p>Bamboo flooring is made from rapidly renewable Moso bamboo that is organically grown and known for its strength and elasticity. All our floors are coated with super-tough proprietary <a href="<?php echo $helper_controller->site_url('best-bamboo-flooring-finish.php'); ?>"> Accuseal Ultra&reg; Finish System</a> and backed by an industry-leading lifetime structural and finish warranty. We strive to ensure that our products meet only the highest standards in milling, appearance and <a href="https://www.ambientbp.com/urea-formaldehyde-free-bamboo-flooring.php">safety</a>. Our natural bamboo flooring is Floorscore&reg; certified and meets the CARB Phase 2 standard which is the most stringent indoor air quality standard in the world. All our bamboo wood flooring comes in premium widths (mostly wide planks) and lengths. Plus, you can get free samples before you purchase because we want you to be more than confident that the color you chose is perfect for your space.</p>
+					<p>Bamboo flooring is made from rapidly renewable Moso bamboo that is organically grown and known for its strength and elasticity. All our floors are coated with super-tough <a href="https://www.ambientbp.com/best-bamboo-flooring-finish.php">proprietary Accuseal Ultra&reg; finish</a> and backed by an industry-leading lifetime structural and finish warranty. We strive to ensure that our products meet only the highest standards in milling, appearance and <a href="https://www.ambientbp.com/urea-formaldehyde-free-bamboo-flooring.php">safety</a>. Our natural bamboo flooring is Floorscore&reg; certified and meets the CARB Phase 2 standard which is the most stringent indoor air quality standard in the world. All our bamboo wood flooring comes in premium widths (mostly wide planks) and lengths. Plus, you can get free samples before you purchase because we want you to be more than confident that the color you chose is perfect for your space.</p>
 				</div>
 				<div class="col-md-6 video-img">
 					<img data-src="<?php echo IMAGE_PATH; ?>bamboo-flooring-cost/two-people-standing-on-wooden-floor.png" alt="two people standing on wooden floor" class="lazyload">
