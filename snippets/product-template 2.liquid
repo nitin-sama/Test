@@ -1,0 +1,384 @@
+<style>
+.product__price .product__price--compare{font-size:1.4em!important;}
+.product__price-savings{font-size:1.4em!important;}
+.product__price {font-size:1.4em!important;}
+</style>
+
+{%- unless thumbnail_position -%}
+  {%- assign thumbnail_position = 'beside' -%}
+{%- endunless -%}
+
+{%- unless description_style -%}
+  {%- assign description_style = 'full' -%}
+{%- endunless -%}
+
+{%- assign product_img_structure = product.featured_media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+<div id="ProductSection-{{ section_id }}"
+  class="product-section"
+  data-section-id="{{ section_id }}"
+  data-section-type="product-template"
+  data-product-handle="{{ product.handle }}"
+  data-product-url="{{ product.url | within: collection }}"
+  data-aspect-ratio="{{ 100 | divided_by: product.featured_media.aspect_ratio }}"
+  data-img-url="{{ product_img_structure }}"
+  {% if settings.product_zoom_enable %}
+    data-image-zoom="true"
+  {% endif %}
+  {% if settings.inventory_enable %}
+    data-inventory="true"
+  {% endif %}
+  {% if settings.inventory_transfers_enable %}
+    data-incoming-inventory="true"
+  {% endif %}
+  {% unless isModal %}
+    data-enable-history-state="true"
+  {% endunless %}>
+
+  {%- include 'product-template-variables' -%}
+
+  <div class="page-content page-content--product">
+    <div class="page-width">
+
+      <div class="sticky-form grid{% unless image_position == 'left' %} grid--product-images-right{% endunless %}">
+        {%- if image_position == 'left' -%}
+          <div class="grid__item {{ product_image_width }}">
+            {% include 'product-images',
+              section_id: section_id,
+              isModal: isModal,
+              thumbnail_arrows: thumbnail_arrows,
+              thumbnail_position: thumbnail_position,
+              video_looping: video_looping,
+              video_style: video_style
+            %}
+          </div>
+        {%- endif -%}
+
+        <div class="grid__item {{ product_description_width }}">
+
+          <div class="product-single__meta">
+            {%- if settings.vendor_enable -%}
+              <div class="product-single__vendor">
+                {%- assign vendor_handle = product.vendor | handleize  -%}
+                {%- if collections[vendor_handle] != empty -%}
+                  <a href="{{ routes.collections_url }}/{{ collections[vendor_handle].handle }}">
+                    {{ collections[vendor_handle].title }}
+                  </a>
+                {%- else -%}
+                  {{ product.vendor | link_to_vendor }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- if isModal -%}
+              <p class="h2 product-single__title">
+                {{ product.title }}
+              </p>
+            {% else %}
+              <h1 class="h2 product-single__title">
+                {{ product.title }}
+              </h1>
+            {%- endif -%}
+
+            {%- if settings.enable_product_reviews and settings.reviews_layout == 'full' -%}
+              {%- if isModal -%}
+                {%- assign review_link = product.url | within: collection | append: '#Reviews-' | append: product.id -%}
+              {% else %}
+                {%- assign review_link = '#Reviews-' | append: product.id -%}
+              {%- endif -%}
+              <a href="{{ review_link }}" class="product-single__review-link">
+                <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+              </a>
+            {%- endif -%}
+
+            {%- if settings.sku_enable -%}
+              <p id="Sku-{{ section_id }}" class="product-single__sku">
+                {%- if current_variant.sku -%}
+                  {{ current_variant.sku }}
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+
+            {%- assign hide_sale_price = true -%}
+            {%- if product.compare_at_price_max > product.price -%}
+              {%- if current_variant.compare_at_price > current_variant.price -%}
+                {%- assign hide_sale_price = false -%}
+              {%- endif -%}
+              <span
+                id="PriceA11y-{{ section_id }}"
+                class="visually-hidden"
+                aria-hidden="{{ hide_sale_price }}">
+                  {{ 'products.general.regular_price' | t }}
+              </span>
+              <span class="product__price-wrap-{{ section_id }}{% if hide_sale_price %} hide{% endif %}">
+                <span id="ComparePrice-{{ section_id }}" class="product__price product__price--compare">
+                  {%- if current_variant.compare_at_price > current_variant.price -%}
+                    {{ current_variant.compare_at_price | money }}
+                  {%- endif -%}
+                </span>
+              </span>
+              <span id="ComparePriceA11y-{{ section_id }}" class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+            {% else %}
+              <span id="PriceA11y-{{ section_id }}" class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+            {%- endif -%}
+
+            <span id="ProductPrice-{{ section_id }}"
+              class="product__price{% if current_variant.compare_at_price > current_variant.price %} on-sale{% endif %}">
+              {{ current_variant.price | money }}
+            </span>
+
+            {%- if settings.product_save_amount -%}
+              {%- if settings.product_save_type == 'dollar' -%}
+                {% capture saved_amount %}{{ current_variant.compare_at_price | minus: current_variant.price | money }}{% endcapture %}
+              {%- else -%}
+                {% capture saved_amount %}{{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%{% endcapture %}
+              {%- endif -%}
+              <span id="SavePrice-{{ section_id }}" class="product__price-savings{% if hide_sale_price %} hide{% endif %}">
+                ({{ 'products.general.save_html' | t: saved_amount: saved_amount }})
+              </span>
+            {%- endif -%}
+
+            <div class="product__unit-price product__unit-price--spacing product__unit-price-wrapper--{{ section_id }}{% unless current_variant.unit_price_measurement %} hide{% endunless %}">
+              {%- capture unit_price_base_unit -%}
+                <span class="product__unit-base--{{ section_id }}">
+                  {%- if current_variant.unit_price_measurement -%}
+                    {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+                      {{ current_variant.unit_price_measurement.reference_value }}
+                    {%- endif -%}
+                    {{ current_variant.unit_price_measurement.reference_unit }}
+                  {%- endif -%}
+                </span>
+              {%- endcapture -%}
+
+              <span class="product__unit-price--{{ section_id }}">{{ current_variant.unit_price | money }}</span>/{{ unit_price_base_unit }}
+            </div>
+
+            {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
+              <div class="product__policies rte small--text-center">
+                <small>
+                  {%- if shop.taxes_included -%}
+                    {{ 'products.product.include_taxes' | t }}
+                  {%- endif -%}
+                  {%- if shop.shipping_policy.body != blank -%}
+                    {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                  {%- endif -%}
+                </small>
+              </div>
+            {%- endif -%}
+
+            {%- if settings.inventory_enable or settings.inventory_transfers_enable -%}
+              {%- assign variants_with_inventory_tracking = product.variants | where: 'inventory_management', 'shopify' -%}
+
+              <script>
+                // Store inventory quantities in JS because they're no longer
+                // available directly in JS when a variant changes.
+                // Have an object that holds all potential products so it works
+                // with quick view or with multiple featured products.
+                window.inventories = window.inventories || {};
+                window.inventories['{{section_id}}'] = {};
+                 {% for variant in variants_with_inventory_tracking %}
+                  window.inventories['{{section_id}}'][{{variant.id}}] = {
+                    'quantity': {{ variant.inventory_quantity | default: 0 }},
+                    'incoming': {{ variant.incoming | default: false | json }},
+                    'next_incoming_date': {{ variant.next_incoming_date | date: format: 'date' | json }}
+                  };
+                 {% endfor %}
+              </script>
+
+              {% comment %}
+                If loaded in quick view, it might be from a JS-loaded function
+                that loads recommended products. If that's the case, the above
+                JS will not set the variant inventory. Add it to an accessible
+                data div to read later instead.
+              {% endcomment %}
+              {%- if isModal -%}
+                <div
+                  data-section-id="{{ section_id }}"
+                  class="hide js-product-inventory-data"
+                  aria-hidden="true"
+                  >
+                  {%- for variant in variants_with_inventory_tracking -%}
+                    <div
+                      class="js-variant-inventory-data"
+                      data-id="{{ variant.id }}"
+                      data-quantity="{{ variant.inventory_quantity | default: 0 }}"
+                      data-incoming="{{ variant.incoming | default: false | json }}"
+                      data-date="{{ variant.next_incoming_date | date: format: 'date' | json }}"
+                    >
+                    </div>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+
+            <hr class="hr--medium">
+
+            {%- unless isModal -%}
+              {% comment %}
+                Shopify's product form attaches a number of tracking
+                scripts that cause slower load times and false statistics.
+                Quick view modals request these on-demand.
+              {% endcomment %}
+              {% include 'product-form', section_id: section_id %}
+            {%- else -%}
+              <div
+                id="ProductFormHolder-{{ section_id }}"
+                class="product-form-holder"
+                data-url="{{ product.url }}"
+                data-template="{{ product.template_suffix }}"></div>
+            {%- endunless -%}
+
+            {%- if settings.trust_image != blank -%}
+              <div class="aos-animate trust-image" style="max-width: {{ settings.trust_image.width }}px;">
+                <div class="image-wrap " style="height: 0; padding-bottom: {{ 100 | divided_by: settings.trust_image.aspect_ratio }}%;">
+                  {%- assign img_url = settings.trust_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  <img class="lazyload"
+                      data-src="{{ img_url }}"
+                      data-widths="[360, 540]"
+                      data-aspectratio="{{ settings.trust_image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ settings.trust_image.alt }}">
+                  <noscript>
+                    <img class="lazyloaded" src="{{ settings.trust_image | img_url: '540x' }}" alt="{{ settings.trust_image.alt }}">
+                  </noscript>
+                </div>
+              </div>
+            {%- endif -%}
+
+           {% assign productDescription = product.description | split:"<!-- split -->"%}
+              <div class="product-single__description rte" id="copy-truncate">
+               {{ productDescription[0] }}
+              </div>
+
+              {% include 'product-additional-content', section_id: section_id %}
+          
+
+            {%- if social -%}
+              {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- unless image_position == 'left' -%}
+          <div class="grid__item {{ product_image_width }}">
+            {% include 'product-images', section_id: section_id, isModal: isModal, thumbnail_position: thumbnail_position, thumbnail_arrows: thumbnail_arrows %}
+          </div>
+        {%- endunless -%}
+      </div>
+
+     
+        <div class="product-single__description-full rte">
+         {{ productDescription[1] }}
+        </div>
+
+        {% include 'product-additional-content', section_id: section_id %}
+  
+    </div>
+  </div>
+</div>
+
+<style>
+  .page-content--product {
+    padding-bottom: 0 !important;
+  }
+
+
+/*  atc-button  */
+@media screen and (max-width: 768px) {
+  div#PageContainer{
+  transform: unset;
+}
+sticky-wrapper{
+  margin-bottom:10px;
+}
+.addtoCart{
+width: 100% !important;
+
+}
+.is-sticky .addtoCart{
+  bottom:0;
+  left:0;
+  top: unset !important;
+  padding-top:10px;
+
+}
+.is-sticky .addtoCart button{
+  width:50%;
+  margin-left: auto;
+  margin-right: auto:
+  
+}
+}
+</style>
+
+
+
+<!-- Read More -->
+<style>
+#copy-truncate a.read-more-button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    max-width: 120px;
+    margin: 10px auto;
+    border-bottom: none;
+    border: 2px solid #62C086;
+    padding: 5px 10px;
+    text-align: center;
+    color: #62C086;
+    cursor: pointer;
+}
+
+#copy-truncate a.read-more-button:after {
+    border-bottom: none;
+}
+
+#copy-truncate {
+  position: relative;
+}
+
+.half-content-fade::after {
+  content: '';
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+}
+
+.half-content-fade.full-content::after {
+  display: none; /* remove the fade-out effect when the full content is shown */
+}
+
+</style>
+
+<script>
+// Get the copy div
+var copyDiv = document.getElementById('copy-truncate');
+
+// Get the full content of the copy div
+var fullContent = copyDiv.innerHTML;
+
+// Set the maximum length of the content to show
+var maxLength = 2500;
+
+// If the content is longer than the maximum length, trim it and add a "Read More" button
+if (fullContent.length > maxLength) {
+  copyDiv.classList.add('half-content-fade');
+  var trimmedContent = fullContent.substring(0, maxLength);
+  var readMoreLink = '<a class="read-more-button" onclick="showFullContent();return false;">Read More</a>';
+  copyDiv.innerHTML = trimmedContent + '<span id="fade-out"></span><span id="read-more">' + readMoreLink + '</span>';
+  
+  // Function to show the full content when the "Read More" button is clicked
+  function showFullContent() {
+    copyDiv.innerHTML = fullContent + '<span id="read-less"> <a href="#copy-truncate" class="read-more-button" onclick="showTrimmedContent();">Read Less</a></span>';
+    copyDiv.classList.add('full-content'); // add class to remove fade-out effect
+  }
+
+  // Function to show the trimmed content when the "Read Less" button is clicked
+  function showTrimmedContent() {
+    copyDiv.innerHTML = trimmedContent + '<span id="fade-out"></span><span id="read-more">' + readMoreLink + '</span>';
+    copyDiv.classList.remove('full-content'); // remove class to re-enable fade-out effect
+  }
+}
+</script>

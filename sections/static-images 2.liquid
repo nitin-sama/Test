@@ -1,0 +1,802 @@
+<div class="custom-wrapper static-banner-custom">
+    <div class="banner-content desktop-banner" style="cursor: pointer; background-image:url('{{ section.settings.banner_pic.src | img_url: '1240x' }}')" onclick="location.href='{{section.settings.banner_url}}';">
+      <div class="banner-content-inner-wrap">
+          {% if section.settings.banner_text != blank %}
+            {{section.settings.banner_text}}
+          {% endif %}
+          {% if section.settings.banner_button_text != blank %}
+        	<div class="banner-btn">
+              <a href="{{section.settings.banner_button_link}}">
+                {{section.settings.banner_button_text}}
+              </a>
+        	</div>
+          {% endif %}
+      </div>
+    </div>
+
+  <!-- tablet banner -->
+    <div class="tablet-banner" style="cursor: pointer; background-image:url('{{ section.settings.tablet_banner_pic.src | img_url: '1240x' }}')" onclick="location.href='{{section.settings.banner_url}}';">
+      <div class="banner-content-inner-wrap">
+          {% if section.settings.banner_text != blank %}
+            {{section.settings.banner_text}}
+          {% endif %}
+          {% if section.settings.banner_button_text != blank %}
+        	<div class="banner-btn">
+              <a href="{{section.settings.banner_button_link}}">
+                {{section.settings.banner_button_text}}
+              </a>
+        	</div>
+          {% endif %}
+      </div>
+    </div>
+  
+  <!-- mobile banner -->
+    <div class="mobile-banner" style="cursor: pointer; background-image:url('{{ section.settings.mobile_banner_pic.src | img_url: '1240x' }}')" onclick="location.href='{{section.settings.banner_url}}';">
+      <div class="banner-content-inner-wrap">
+          {% if section.settings.banner_text != blank %}
+            {{section.settings.banner_text}}
+          {% endif %}
+          {% if section.settings.banner_button_text != blank %}
+        	<div class="banner-btn">
+              <a href="{{section.settings.banner_button_link}}">
+                {{section.settings.banner_button_text}}
+              </a>
+        	</div>
+          {% endif %}
+      </div>
+    </div>
+</div>
+
+<style>
+  h1.banner-text-heading {
+    color: #f2a500;
+    font-family: 'Bebas Kai';
+    font-size: 70px;
+    -webkit-transform: rotate(-4deg);
+    -moz-transform: rotate(-4deg);
+    -o-transform: rotate(-4deg);
+    -ms-transform: rotate(-4deg);
+ 	transform: rotate(-4deg);
+    text-shadow: -2px 2px 1px #000, -4px 3px 1px #fff;
+    margin-bottom: 0;
+  }
+  p.more-text {
+    color: #fff;
+    font-size: 64px;
+    font-family: 'Bebas Kai';
+    -webkit-transform: rotate(-4deg);
+    -moz-transform: rotate(-4deg);
+    -o-transform: rotate(-4deg);
+    -ms-transform: rotate(-4deg);
+    transform: rotate(-4deg);
+    padding-left: 30px;
+    margin-top: -21px;
+  }
+  .banner-content-inner-wrap {
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
+    float: left;
+    overflow: hidden;
+    padding-left: 6%;
+    padding-top: 5%;
+  }
+  .banner-btn {
+    background: #fff;
+    padding: 11px 32px 11px;
+    line-height: unset;
+    display: inline-block;
+    box-shadow: -7px 8px 1px #f2a500;
+    margin-bottom: 23px;
+    font-size: 28px;
+    margin-top: -24px;
+    -webkit-transform: rotate(-4deg);
+    -mz-transform: rotate(-4deg);
+    -o-transform: rotate(-4deg);
+    transform: rotate(-4deg);
+    -webkit-backface-visibility: hidden;
+  }
+  .banner-content {
+    width: 100%;
+    height: 100%;
+    min-height: 380px;
+    background-repeat: no-repeat;
+    background-size: contain;
+/*     background-position: 90% 0%; */
+  }
+  .tablet-banner {
+    width: 100%;
+    height: 216px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: none;
+  }
+  .mobile-banner {
+    display: none;
+    width: 100%;
+    height: 400px;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  img {
+    max-width: 100%;
+  }
+  @media screen and (max-width: 4000px) {
+    .banner-content {
+      background-size: cover;
+      min-height: 1125px;
+    }
+    .banner-content-inner-wrap {
+      max-width: 2000px;
+      padding-left: 6%;
+      padding-top: 8%;
+    }
+    p.more-text {
+      font-size: 9em;
+    }
+    .banner-btn {
+      font-size: 4em;
+    }
+    h1.banner-text-heading {
+        text-shadow: -6px 0px 1px #000, -12px 4px 1px #fff;
+        margin-bottom: 0;
+        font-size: 11em;
+    }
+    .banner-btn {
+        box-shadow: -12px 15px 1px #f2a500;
+        margin-bottom: 50px;
+      	-webkit-backface-visibility: hidden;
+    }
+  }
+  @media screen and (max-width: 3950px) {
+    .banner-content {
+      min-height: 1109px;
+    }
+  }
+  @media screen and (max-width: 3880px) {
+    .banner-content {
+      min-height: 1093px;
+    }
+  }
+  @media screen and (max-width: 3840px) {
+    .banner-content {
+      min-height: 1077px;
+    }
+  }
+  @media screen and (max-width: 3790px) {
+    .banner-content {
+      min-height: 1061px;
+    }
+  }
+  @media screen and (max-width: 3720px) {
+    .banner-content {
+      min-height: 1061px;
+    }
+  }
+  @media screen and (max-width: 3700px) {
+    .banner-content {
+      min-height: 1035px;
+    }
+  }
+  @media screen and (max-width: 3640px) {
+    .banner-content {
+      min-height: 1018px;
+    }
+  }
+  @media screen and (max-width: 3580px) {
+    .banner-content {
+      min-height: 1006px;
+    }
+  }
+  @media screen and (max-width: 3560px) {
+    .banner-content-inner-wrap {
+        max-width: 2000px;
+        padding-left: 0%;
+        padding-top: 6%;
+    }
+  }
+  @media screen and (max-width: 3530px) {
+    .banner-content {
+      min-height: 992px;
+    }
+  }
+  @media screen and (max-width: 3490px) {
+    .banner-content {
+      min-height: 980px;
+    }
+  }
+  @media screen and (max-width: 3450px) {
+    .banner-content {
+      min-height: 969px;
+    }
+  }
+   @media screen and (max-width: 3400px) {
+    .banner-content {
+      min-height: 954px;
+    }
+  }
+   @media screen and (max-width: 3350px) {
+    .banner-content {
+      min-height: 938px;
+    }
+  }
+  @media screen and (max-width: 3340px) {
+    .banner-content-inner-wrap {
+        max-width: 1600px;
+    }
+    h1.banner-text-heading {
+      text-shadow: -3px 3px 1px #000, -8px 7px 1px #fff;
+      margin-bottom: 0;
+      font-size: 11em;
+  }
+  }
+  @media screen and (max-width: 3300px) {
+    .banner-content {
+      min-height: 926px;
+    }
+  }
+  @media screen and (max-width: 3250px) {
+    .banner-content {
+      min-height: 911px;
+    }
+  }
+  @media screen and (max-width: 3200px) {
+    .banner-content {
+      min-height: 859px;
+    }
+  }
+  @media screen and (max-width: 3020px) {
+    .banner-content {
+      min-height: 847px;
+    }
+    .banner-content-inner-wrap {
+      max-width: 1400px;
+    }
+  }
+  @media screen and (max-width: 2980px) {
+    .banner-content {
+      min-height: 837px;
+    }
+  }
+  @media screen and (max-width: 2950px) {
+    .banner-content {
+      min-height: 827px;
+    }
+  }
+  @media screen and (max-width: 2910px) {
+    .banner-content {
+      min-height: 815px;
+    }
+  }
+   @media screen and (max-width: 2870px) {
+    .banner-content {
+      min-height: 804px;
+    }
+  }
+  @media screen and (max-width: 2830px) {
+    .banner-content {
+      min-height: 795px;
+    }
+  }
+  @media screen and (max-width: 2800px) {
+    .banner-content {
+      min-height: 785px;
+    }
+    .banner-content-inner-wrap {
+        max-width: 1260px;
+    }
+    h1.banner-text-heading {
+      font-size: 10em;
+    }
+    p.more-text {
+        font-size: 8em;
+    }
+    .banner-btn {
+        font-size: 3em;
+    }
+  }
+  @media screen and (max-width: 2760px) {
+    .banner-content {
+      min-height: 774px;
+    }
+  }
+  @media screen and (max-width: 2730px) {
+    .banner-content {
+      min-height: 764px;
+    }
+  }
+  @media screen and (max-width: 2690px) {
+    .banner-content {
+      min-height: 755px;
+    }
+  }
+  @media screen and (max-width: 2660px) {
+    .banner-content {
+      min-height: 900px;
+      background-size: contain;
+    }
+    #shopify-section-1639675240ad07f948 {
+      margin-top: 0px;
+    }
+  }
+  @media screen and (max-width: 2470px) {
+    .banner-content-inner-wrap {
+        max-width: 1090px;
+        padding-left: 3%;
+    }
+    h1.banner-text-heading {
+        font-size: 8em;
+    }
+    p.more-text {
+        font-size: 7em;
+    }
+  }
+  @media screen and (max-width: 2420px) {
+    .banner-content {
+      min-height: 820px;
+    }
+  }
+  @media screen and (max-width: 2330px) {
+    .banner-content {
+      min-height: 760px;
+    }
+  }
+  @media screen and (max-width: 2210px) {
+    .banner-content {
+      min-height: 700px;
+    }
+  }
+  @media screen and (max-width: 2120px) {
+    .banner-content-inner-wrap {
+        max-width: 1000px;
+    }
+    h1.banner-text-heading {
+        font-size: 7em;
+    } 
+  }
+  @media screen and (max-width: 2080px) {
+    .banner-content {
+      min-height: 650px;
+    }
+  }
+   @media screen and (max-width: 1960px) {
+    .banner-content {
+      min-height: 600px;
+    }
+  }
+  @media screen and (max-width: 1920px) {
+    .banner-content-inner-wrap {
+        max-width: 850px;
+    }
+    p.more-text {
+        font-size: 5em;
+    }
+    .banner-btn {
+        font-size: 2em;
+    }
+    h1.banner-text-heading {
+        text-shadow: -3px 2px 1px #000, -5px 4px 1px #fff;
+      	 font-size: 6em;
+    }
+  }
+  @media screen and (max-width: 1770px) {
+    .banner-content {
+      min-height: 560px;
+    }
+  }
+  @media screen and (max-width: 1670px) {
+    .banner-content-inner-wrap {
+      max-width: 700px;
+      padding-left: 6%;
+      padding-top: 5%;
+    }
+      h1.banner-text-heading {
+        font-size: 85px;
+        transform: rotate(-4deg);
+        text-shadow: -2px 2px 1px #000, -4px 3px 1px #fff;
+        margin-bottom: 0;
+      }
+      p.more-text {
+        color: #fff;
+        font-size: 70px;
+        font-family: 'Bebas Kai';
+        transform: rotate(-4deg);
+        padding-left: 30px;
+        margin-top: -21px;
+      }
+      .banner-content-inner-wrap {
+        width: 100%;
+        max-width: 700px;
+        text-align: center;
+        float: left;
+        overflow: hidden;
+        padding-left: 56px;
+        padding-top: 86px;
+      }
+  }
+  @media screen and (max-width: 1590px) {
+    .banner-content {
+      min-height: 510px;
+    }
+  }
+  @media screen and (max-width: 1440px) {
+    .banner-content {
+      min-height: 457px;
+    }
+  }
+  @media screen and (max-width: 1400px) {
+    h1.banner-text-heading {
+      color: #f2a500;
+      font-family: 'Bebas Kai';
+      font-size: 70px;
+      transform: rotate(-4deg);
+      text-shadow: -2px 2px 1px #000, -4px 3px 1px #fff;
+      margin-bottom: 0;
+    }
+    p.more-text {
+      color: #fff;
+      font-size: 64px;
+      font-family: 'Bebas Kai';
+      transform: rotate(-4deg);
+      padding-left: 30px;
+      margin-top: -21px;
+    }
+    .banner-content-inner-wrap {
+      width: 100%;
+      max-width: 700px;
+      text-align: center;
+      float: left;
+      overflow: hidden;
+      padding-left: 56px;
+      padding-top: 86px;
+    }
+    .banner-btn {
+      background: #fff;
+      padding: 11px 32px 11px;
+      line-height: unset;
+      display: inline-block;
+      box-shadow: -7px 8px 1px #f2a500;
+      margin-bottom: 23px;
+      font-size: 28px;
+      margin-top: -24px;
+      -webkit-transform: rotate(-4deg);
+      -mz-transform: rotate(-4deg);
+      -o-transform: rotate(-4deg);
+      transform: rotate(-4deg);
+      -webkit-backface-visibility: hidden
+    }
+  }
+  @media screen and (max-width: 1310px) {
+    .banner-content-inner-wrap {
+      max-width: 600px;
+    }
+  }
+  @media screen and (max-width: 1270px) {
+    .banner-content {
+      min-height: 380px;
+    }
+    #shopify-section-1639675240ad07f948 {
+      margin-top: 75px;
+    }
+  }
+  @media screen and (max-width: 1210px) {
+    .banner-content-inner-wrap {
+        max-width: 550px;
+      	padding-left: 30px;
+    }
+  }
+  @media screen and (max-width: 1170px) {
+    .banner-content-inner-wrap {
+      padding-top: 55px;
+    }
+  }
+  @media screen and (max-width: 1150px) {
+    .banner-content {
+        min-height: 330px;
+    }
+  }
+  @media screen and (max-width: 1100px) {
+    .banner-content {
+        min-height: 311px;
+    }
+    .banner-content-inner-wrap {
+        max-width: 500px;
+    }
+    h1.banner-text-heading {
+      font-size: 56px;
+    }
+    p.more-text {
+      font-size: 50px;
+      margin-top: -10px;
+    }
+    .banner-btn {
+      font-size: 18px;
+      padding: 8px 18px 8px;
+    }
+  }
+  @media screen and (max-width: 1060px) {
+    .banner-content {
+        min-height: 298px;
+    }
+  }
+  @media screen and (max-width: 990px) {
+    .banner-content {
+        min-height: 280px;
+    }
+  }
+  @media screen and (max-width: 980px) {
+    .banner-content {
+        min-height: 275px;
+    }
+  }
+  @media screen and (max-width: 960px) {
+    .banner-content-inner-wrap {
+        max-width: 450px;
+    }
+  }
+  @media screen and (max-width: 910px) {
+    .banner-content-inner-wrap {
+        max-width: 400px;
+    }
+    h1.banner-text-heading {
+      font-size: 50px;
+    }
+    p.more-text {
+      font-size: 42px;
+    }
+    .banner-btn {
+        font-size: 16px;
+    }
+  }
+  @media screen and (max-width: 830px) {
+    .banner-content-inner-wrap {
+        max-width: 350px;
+    }
+    h1.banner-text-heading {
+      font-size: 40px;
+      text-shadow: -2px 1px 1px #000, -3px 2px 1px #fff;
+    }
+     p.more-text {
+      font-size: 30px;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .desktop-banner {
+      display: none;
+    }
+    .tablet-banner {
+      display: block;
+      background-size: contain;
+    }
+  }
+  @media screen and (max-width: 700px) {
+    .banner-content-inner-wrap {
+        max-width: 330px;
+    }
+    .banner-content-inner-wrap {
+        padding-top: 30px;
+    }
+  }
+  @media screen and (max-width: 620px) {
+    .tablet-banner {
+      height: 100%;
+      min-height: 180px;
+    }
+  }
+  @media screen and (max-width: 660px) {
+    .banner-content-inner-wrap {
+        max-width: 300px;
+    }
+    h1.banner-text-heading {
+      font-size: 32px;
+    }
+    p.more-text {
+      font-size: 26px;
+    }
+    .banner-btn {
+       padding: 8px 10px 8px;
+    }
+  }
+  @media screen and (max-width: 580px) {
+    .banner-content-inner-wrap {
+        padding-top: 20px;
+    }
+    .banner-content-inner-wrap {
+      padding-left: 0;
+    }
+    p.more-text {
+      margin-top: -8px
+    }
+    .banner-btn {
+        padding: 5px 9px 5px;
+    }
+  }
+  @media screen and (max-width: 540px) {
+    p.more-text {
+        font-size: 22px;
+      	margin-top: -6px;
+      	margin-bottom: 0;
+    }
+    h1.banner-text-heading {
+        font-size: 28px;
+    }
+    .banner-btn {
+        font-size: 14px;
+      	 margin-top: -3px;
+    }
+}
+  @media screen and (max-width: 520px) {
+    .banner-content-inner-wrap {
+        max-width: 260px;
+    }
+  }
+  @media screen and (max-width: 490px) {
+    .tablet-banner {
+      height: 100%;
+      min-height: 140px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .tablet-banner {
+      display: none;
+    }
+    .mobile-banner {
+      display: block;
+      background-size: contain;
+    }
+    h1.banner-text-heading {
+      font-size: 55px;
+      transform: rotate(1deg);
+      text-shadow: -2px 2px 1px #000, -4px 3px 1px #fff;
+      line-height: 66px;
+    }
+    p.more-text {
+      font-size: 45px;
+      line-height: 50px;
+      transform: rotate(1deg);
+      margin-top: 6px;
+      padding-left: 0;
+	}
+    .banner-btn {
+        padding: 7px 32px 7px;
+      	transform: rotate(1deg);
+      	margin-top: 15px;
+    }
+    .banner-content-inner-wrap {
+        max-width: 248px;
+      	margin-top: 5px;
+    }
+  }
+  @media screen and (max-width: 470px) {
+    .banner-content-inner-wrap {
+        max-width: 230px;
+        margin-top: 5px;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    h1.banner-text-heading {
+        font-size: 50px;
+        line-height: 56px;
+    }
+    p.more-text {
+        font-size: 36px;
+        line-height: 40px;
+    }
+  }
+  @media screen and (max-width: 440px) {
+    .mobile-banner {
+      display: block;
+      background-size: contain;
+      height: 100%;
+      min-height: 370px;
+    }
+  }
+  @media screen and (max-width: 420px) {
+    .mobile-banner {
+      min-height: 345px;
+    }
+  }
+  @media screen and (max-width: 410px) {
+    h1.banner-text-heading {
+        font-size: 42px;
+        line-height: 48px;
+      	text-shadow: -2px 1px 1px #000, -3px 2px 1px #fff;
+    }
+    p.more-text {
+        font-size: 32px;
+        line-height: 40px;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    .banner-content-inner-wrap {
+          max-width: 222px;
+      }
+  }
+  @media screen and (max-width: 390px) {
+    .mobile-banner {
+      min-height: 323px;
+    }
+  }
+  @media screen and (max-width: 380px) {
+    h1.banner-text-heading {
+        font-size: 36px;
+        line-height: 40px;
+    }
+    p.more-text {
+        font-size: 30px;
+    }
+    .banner-btn {
+        padding: 7px 12px 7px;
+    }
+  }
+  @media screen and (max-width: 370px) {
+    .mobile-banner {
+      min-height: 305px;
+    }
+  }
+  @media screen and (max-width: 350px) {
+    .mobile-banner {
+      min-height: 293px;
+    }
+    .banner-content-inner-wrap {
+        max-width: 180px;
+    }
+  }
+  @media screen and (max-width: 330px) {
+    .mobile-banner {
+      min-height: 273px;
+    }
+  }
+</style>
+
+
+{% schema %}
+  {
+    "name": "Static Images",
+    "settings": [
+		{
+			"type": "image_picker",
+			"id": "banner_pic",
+			"label": "Add banner Image"
+		},
+		{
+			"type": "html",
+			"id": "banner_text",
+			"label": "Add Banner Text Here"
+		},
+		{
+			"type": "text",
+			"id": "banner_button_text",
+			"label": "Add Button Text Here"
+		},
+		{
+			"type": "url",
+			"id": "banner_button_link",
+			"label": "Add Button Link"
+		},
+		{
+			"type": "image_picker",
+			"id": "tablet_banner_pic",
+			"label": "Add Tablet Image"
+		},
+		{
+			"type": "image_picker",
+			"id": "mobile_banner_pic",
+			"label": "Add Mobile banner Image"
+		},
+		{
+			"type": "url",
+			"id": "banner_url",
+			"label": "Add banner url"
+		}
+	],
+	"presets" : [
+		{	
+			"name": "Static Images",
+			"category": "Image"
+		}
+	]
+  }
+{% endschema %}
+
+

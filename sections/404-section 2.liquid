@@ -1,0 +1,38 @@
+<div>
+  <div class="image-and-content-wrapper">
+    <div class="image">
+      {% if section.settings.image_1 != 'blank' %}
+        {{ section.settings.image_1 | img_url: '2048x' | img_tag }}
+      {% endif %}
+    </div>
+    <div class="content">
+      {% if section.settings.description != 'blank' %}
+        {{ section.settings.description }}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "404 Image",
+    "settings": [
+      {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image"    
+    },
+      {
+        "type": "textarea",
+      "id": "description",
+      "label": "Content"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
