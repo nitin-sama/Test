@@ -6491,3 +6491,44 @@ lazySizesConfig.expFactor = 4;
 
 // slick slider on blog landing page
 $('.blog-collection-slider').slick();
+
+// Blacklisted words
+if (window.location.search !== '' && window.location.search !== '?') {
+
+    const params = new URLSearchParams(window.location.search);
+
+    let queries = {};
+
+    for(var value of params.keys()) {
+
+         queries[value] = params.get(value);
+
+    }
+
+    let blacklist_words = [
+
+      "zhanbu88.com"
+
+    ];
+
+    for (const [key, value] of Object.entries(queries)) {
+
+        if (
+
+            (/[^\x00-\x7F]+/.test( value ) && key === 'q') ||
+
+            (/[^\x00-\x7F]+/.test( value ) && key === 'search_query') ||
+
+            (/[^\x00-\x7F]+/.test( value ) && key === 's') ||
+
+            (blacklist_words.length && blacklist_words.includes(value))
+
+        ) {
+
+            window.location.href = window.location.href.split('?')[0]
+
+        }
+
+    }
+
+}

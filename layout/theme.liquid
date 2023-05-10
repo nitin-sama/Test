@@ -1,6 +1,39 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
-<head>
+<head>{% render 'spdn' %}
+  
+<!-- add GA4 tracking script -->
+  <script>
+  window.routes = {
+    cart_add_url: {{ routes.cart_add_url | json }},
+    cart_change_url: {{ routes.cart_change_url | json }},
+    cart_update_url: {{ routes.cart_update_url | json }},
+  };
+  window.ct_gtm_settings = {
+    storefront_token: '5957f338c659f8a2fb2d2de0a5cc6ddb', // Enter the storefront token
+    currency: {{ shop.currency | json }}, // Currency to track in
+    shop_url: {{ shop.secure_url | json }}, // The shop URL needed for the API calls
+    searchPagePath: '/search', // The search path. Go to the search results page and enter document.location.pathname in the console and use that
+    template: {{ template | json }}, // The current page template
+    customer: {{ customer | json }}, // The current customer
+    collectionTitle: {{ collection.title | json }}, // The collection title if on a collection page
+    productDetails: {{ product.selected_or_first_available_variant.id | json }}, // The variant ID needed for the API
+  }
+
+  {% if template contains 'article' %}
+  // Article pageview tracking
+  window.dataLayer = window.dataLayer || [];
+  dataLayer.push({
+    event:        'view_article',
+    author:       {{ article.author | json }},
+    title:        {{ article.title | json }},
+    dateModified: {{ article.published_at | date: "%Y-%m-%dT%H:%M:%SZ" | json }},
+    dateCreated:  {{ article.published_at | date: "%Y-%m-%dT%H:%M:%SZ" | json }},
+    pageType:     'Blog Post',
+  });
+  {% endif %}
+</script>
+  
    <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -36,53 +69,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </script>
 {% endif %}
 
-  {{shop.url | append: share_permalink}}
-
   {% if canonical_url contains '/collections/vendors?q=websites' %}
-
        <meta name="robots" content="noindex">
-
   {% endif %}
 
   {% if canonical_url contains '/collections/globo_basis_collection' %}
-
        <meta name="robots" content="noindex">
-
   {% endif %}
 
-
-  
-  <!-- add GA4 tracking script -->
-  <script>
-  window.routes = {
-    cart_add_url: {{ routes.cart_add_url | json }},
-    cart_change_url: {{ routes.cart_change_url | json }},
-    cart_update_url: {{ routes.cart_update_url | json }},
-  };
-  window.ct_gtm_settings = {
-    storefront_token: '5957f338c659f8a2fb2d2de0a5cc6ddb', // Enter the storefront token
-    currency: {{ shop.currency | json }}, // Currency to track in
-    shop_url: {{ shop.secure_url | json }}, // The shop URL needed for the API calls
-    searchPagePath: '/search', // The search path. Go to the search results page and enter document.location.pathname in the console and use that
-    template: {{ template | json }}, // The current page template
-    customer: {{ customer | json }}, // The current customer
-    collectionTitle: {{ collection.title | json }}, // The collection title if on a collection page
-    productDetails: {{ product.selected_or_first_available_variant.id | json }}, // The variant ID needed for the API
-  }
-
-  {% if template contains 'article' %}
-  // Article pageview tracking
-  window.dataLayer = window.dataLayer || [];
-  dataLayer.push({
-    event:        'view_article',
-    author:       {{ article.author | json }},
-    title:        {{ article.title | json }},
-    dateModified: {{ article.published_at | date: "%Y-%m-%dT%H:%M:%SZ" | json }},
-    dateCreated:  {{ article.published_at | date: "%Y-%m-%dT%H:%M:%SZ" | json }},
-    pageType:     'Blog Post',
-  });
+  {% if template == 'search' %}
+    <meta name="robots" content="noindex">
   {% endif %}
-</script>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -210,7 +207,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <link rel="stylesheet" href="{{ 'custom.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'slick.css' | asset_url }}">
   <!-- Custom CSS ends -->
-</head>
 
 <body class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" data-transitions="false">{% include 'mc-limit' %}
   <!-- Google Tag Manager (noscript) -->

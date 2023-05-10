@@ -8,11 +8,14 @@
 {% paginate collection.products by 10000 %}
 
 <div
+  class="presale-template"
   id="CollectionSection"
   data-section-id="{{ section.id }}"
   data-section-type="collection-template">
 
- 
+     <h1 class="section-header__title presale" style="margin-bottom: 20px;text-align: center;">
+        {{ collection.title }}
+     </h1>
     {% if top_desc != blank %}
       <div class="rte" style="text-align: center;">
         {{ top_desc }}
@@ -125,6 +128,23 @@
     padding-left: 25px;
     color: #006956;
   }
+  .presale-template .grid.grid--uniform.grid--collection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.presale-template span.released-date {
+    min-width: 105px;
+}
+
+@media(max-width: 700px){
+    .presale-template .grid.grid--uniform.grid--collection {
+    grid-template-columns: 1fr;
+}
+    .presale-template span.released-date {
+    min-width: 90px;
+}
+}
 </style>
 
 {% schema %}

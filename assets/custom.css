@@ -190,3 +190,8 @@ a.BIS_trigger.home-page:hover {
 background: #00df77;
 }
 /* Notfiy when available ends */
+
+.top-content a{
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,.15);
+}
