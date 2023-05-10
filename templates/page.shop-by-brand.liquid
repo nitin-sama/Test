@@ -1,0 +1,34 @@
+<div class="shop-by-brand-banner">{% section 'static-images' %}</div>
+
+<div class="page-width page-content">
+
+
+	<div class="grid">
+      <div class="grid__item medium-up--three-quarters medium-up--push-one-eighth">
+
+        <header class="section-header">
+          <h1 class="section-header__title">{{ page.title }}</h1>
+        </header>
+
+        <div class="rte rte--nomargin">
+          {{ page.content }}
+        </div>
+		{% section 'shop-by-brand-template' %}
+      </div>
+  	</div>
+</div>
+
+<style>
+  .shop-by-brand-banner{
+    background-color: black;
+}
+.shop-by-brand-banner div#shopify-section-static-images {
+    max-width: 1400px;
+    margin: auto;
+}
+
+.shop-by-brand-banner div#shopify-section-static-images div{
+    min-height: 200px !important;
+    background-position: center;
+}
+</style>

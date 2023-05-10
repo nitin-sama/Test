@@ -1,0 +1,116 @@
+<div class="collection-box__title" style="margin-top: 30px;">
+    {{ section.settings.top-title }}
+</div>
+<div class="collection-wrap">
+  
+  {% for block in section.blocks %}
+  	{% assign collection = block.settings.collection %}
+      <div class="collection-box-wrap collection-item collection-item--overlaid">
+          <a href="{{block.settings.collection-link}}">
+            <div class="media_wrap">
+              <img src="{{block.settings.collection-pic | img_url: '2048x'}}" />
+          	</div>
+          <div class="collection_title">
+            {% if custom-title != blank %}
+              <p>{{block.settings.custom-title}}</p>
+            {% else %}
+              <p>{{collection.title}}</p>
+            {% endif %}
+          </div></a>
+      </div>
+  {% endfor %}
+</div>
+
+<div class="collection-box__shopall">
+    <a href="{{ section.settings.button-link }}">{{ section.settings.button-text }}</a>
+</div>
+
+<style>
+.breadcrumb {
+  text-align: center;
+ }
+.section-header {
+  text-align: center;
+}
+.collection-wrap {
+  display: flex;
+  margin: 0 auto;
+  max-width: 540px;
+  justify-content: space-between;
+  margin-top: 35px;
+  margin-bottom: 40px;
+}
+.collection-box-wrap {
+  border: 1px solid #ddd;
+  text-align: center;
+  width: 48%;
+  cursor: pointer;
+}
+.media_wrap {
+    padding: 40px;
+}
+.collection-box-wrap:hover .collection_title {
+  position: relative;
+  top: -40%;
+  z-index: 1000;
+}
+.collection-box-wrap  p {
+  margin-bottom: 0;
+}
+
+</style>
+
+
+
+{% schema %}
+  {
+    "name": "Shop by brand",
+    "settings": [
+		{
+			"type": "html",
+			"id": "top-title",
+			"label": "Add Title here"
+		},
+        {
+          "type": "text",
+          "id": "button-text",
+		  "label": "Add Button Text"
+        },
+        {
+          "type": "url",
+          "id": "button-link",
+		  "label": "Add Button URL"
+        }
+	],
+	"blocks": [
+		{
+			"type": "collections",
+			"name": "Shop by brand collections",
+			"settings": [
+				{
+					"type": "collection",
+					"id": "collection",
+					"label": "Add collection"
+				},
+                {
+					"type": "text",
+					"id": "custom-title",
+					"label": "Custom Title"
+				},
+				{
+					"type": "image_picker",
+					"id": "collection-pic",
+					"label": "Select collection image"
+				},
+				{
+					"type": "url",
+					"id": "collection-link",
+					"label": "Add Collection Link"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+
+

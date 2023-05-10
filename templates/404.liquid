@@ -1,0 +1,73 @@
+<div class="custom-404-section">
+    <div class="rte text-spacing">
+      {% section '404-section' %}
+    </div>
+</div>
+
+<style>
+  .custom-404-section .image-and-content-wrapper {
+    position: relative;
+    
+}
+
+.custom-404-section .image-and-content-wrapper .content {
+    position: absolute;
+    bottom: 80px;
+    color: white;
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    left: 50%;
+  transform: translateX(-50%);
+    font-size: 18px;
+}
+
+.custom-404-section .image-and-content-wrapper .not-found-anchors a{
+  color: white;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #00ac5c;
+}
+
+.custom-404-section .image-and-content-wrapper .not-found-anchors {
+  margin-top: 40px;
+  color: white;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+@media(max-width: 700px){
+  .custom-404-section .image-and-content-wrapper .content {
+    position: relative;
+    bottom: 0px;
+    padding: 15px 15px 40px 15px;
+  }
+  
+  .custom-404-section .image-and-content-wrapper .not-found-anchors{
+    margin: 0;
+  display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+     justify-items: center;
+}
+  
+}
+
+.custom-404-section .image-and-content-wrapper {
+    background-color: black;
+}
+
+.custom-404-section div#shopify-section-404-section {
+  margin: 0;
+}
+
+.custom-404-section .rte.text-spacing {
+  margin: 0;
+  
+}
+
+.custom-404-section  img {
+    width: 100%;
+}
+</style>

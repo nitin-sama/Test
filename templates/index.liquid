@@ -1,0 +1,46 @@
+{% comment %}
+  Your home page is build up of sections, the code for each living in
+  the sections/ director.
+{% endcomment %}
+
+{{ content_for_index }}
+
+<!-- Organization schema -->
+
+<script type="application/ld+json">
+
+{"@context": "https://schema.org","@type":"Organization","name": "Giant Sports Cards","url": "https://giantsportscards.com/",
+"logo": "https://cdn.shopify.com/s/files/1/0399/4343/8499/files/Giant_Sports_Cards_Logo_2x_32a27ae4-784d-4a58-994b-a104a6ed4a14_100x@2x.png",
+"address": {
+"@type": "PostalAddress",
+"streetAddress": "1815 Hembree Rd., Suite 413",
+"addressLocality": "Alpharetta",
+"addressRegion": "GA",
+"postalCode": "30009",
+"addressCountry": "USA"
+},
+"contactPoint": {"@type": "ContactPoint","contactType": "contact",
+"telephone": "800-601-2650",
+"email": "info@giantsportscards.com"},
+"sameAs": [
+    "https://www.instagram.com/giantsportscards/",
+    "https://www.facebook.com/GiantSportsCards/",
+    "https://www.youtube.com/giantbreaks",
+    "https://twitter.com/giantsportscard"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "WebSite",
+  "name": "Giant Sports Cards",
+  "url": "https://giantsportscards.com/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://giantsportscards.com/search?type={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>

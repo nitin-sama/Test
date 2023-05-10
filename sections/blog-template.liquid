@@ -1,0 +1,249 @@
+{% assign description = blog.description | split: '<!-- split -->' %}
+{% assign top_desc = description[0] %}
+{% assign bottom_desc = description[1] %}
+
+{% paginate blog.articles by 21 %}
+  <div data-section-id="{{ section.id }}" data-section-type="blog">
+    <div class="page-width page-content">
+      <header class="section-header{% if section.settings.blog_show_tag_filter and blog.tags.size > 0 %}{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}{% endif %}">
+        <h1 class="section-header__title">
+          {{ blog.title }}
+
+          {% if section.settings.blog_show_rss %}
+            <a href="{{ shop.url }}{{ blog.url }}.atom" class="rss-link">
+              <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-rss" viewBox="0 0 20 20">
+                <path fill="#444" d="M5.903 16.586a2.489 2.489 0 1 1-4.977 0 2.489 2.489 0 0 1 4.977 0zM12.956 19.075H9.43c0-4.688-3.817-8.505-8.505-8.505V7.044c6.638 0 12.031 5.393 12.031 12.031z"/><path fill="#444" d="M15.445 19.075c0-8.028-6.493-14.52-14.52-14.52V.925c10.019 0 18.15 8.131 18.15 18.15h-3.63z"/>
+              </svg>
+              <span class="icon__fallback-text">RSS</span>
+            </a>
+          {% endif %}
+        </h1>
+
+        {% if section.settings.blog_show_tag_filter and blog.tags.size > 0 %}
+          <select id="BlogTagFilter">
+            <option value="/blogs/{{ blog.handle }}">All</option>
+            {% for tag in blog.all_tags %}
+              {%- include 'filter-out-custom-tags' -%}
+              <option
+                value="/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}"
+                {% if current_tags contains tag %}
+                  selected
+                {% endif %}
+              >
+                {{ tag }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endif %}
+      </header>
+
+      <div class="form-show-in-mob">
+        {% include 'search-bar-blog', search_btn_style: 'btn', search_bar_location: 'search-bar--page' %}
+      </div>
+
+      <div class="custom-flex-blog-landing">
+        <div class="search-con-blog-landing">
+          <div class="form-show-in-desktop">
+            {% include 'search-bar-blog', search_btn_style: 'btn', search_bar_location: 'search-bar--page' %}
+          </div>
+          <div class="blog-collection-one">
+            <div class="custom-d-flex">
+              <a href="{{ shop.url }}/collections/new-releases"><h2>NEW RELEASES</h2></a>
+              <a href="{{ shop.url }}/collections/new-releases">See All</a>
+            </div>
+            <div class="blog-collection-slider">
+              {% for product in collections['new-releases'].products limit: 10 %}
+                <div class="sellers__slider-item slider_item">
+                  <a class="btn-offset offset-yellow" href="{{ product.url }}">
+                    <div class="story-slider__image">
+                      {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                    </div>
+                    <h2 class="story-slider__caption">{{ product.title }}</h2>
+                    <p class="story-slider__text"><strong>Price:</strong> {{ product.price_min | money }}</p>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="blog-collection-two">
+            <div class="custom-d-flex">
+              <a href="{{ shop.url }}/collections/presales"><h2>PRESALES</h2></a>
+              <a href="{{ shop.url }}/collections/presales">See All</a>
+            </div>
+            <div class="blog-collection-slider">
+              {% for product in collections.presales.products limit: 10 %}
+                <div class="sellers__slider-item slider_item">
+                  <a class="btn-offset offset-yellow" href="{{ product.url }}">
+                    <div class="story-slider__image">
+                      {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                    </div>
+                    <h2 class="story-slider__caption">{{ product.title }}</h2>
+                    <p class="story-slider__text"><strong>Price:</strong> {{ product.price_min | money }}</p>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="content-blog-landing">
+          {% if section.settings.blog_top_description != blank %}
+            <div class="top_blog_desc">
+              <p>{{ section.settings.blog_top_description }}</p>
+            </div>
+          {% endif %}
+
+          <div class="grid grid--uniform">
+            {% for article in blog.articles %}
+              {% include 'article-grid-item',
+                grid_item_width: 'medium-up--one-third',
+                per_row: '3',
+                image_size: section.settings.blog_image_size
+              %}
+            {% endfor %}
+          </div>
+
+          {% if paginate.pages > 1 %}
+            {% include 'pagination' %}
+          {% endif %}
+
+          <!-- add bottom copy -->
+          <div class="blog-bottom-content">
+            <div class="bottom-content-wrap">
+              {% if section.settings.blog_description_left != blank %}
+                <div class="bottom-content-left">
+                  {{ section.settings.blog_description_left }}
+                </div>
+              {% endif %}
+              {% if section.settings.blog_description_right != blank %}
+                <div class="bottom-content-right">
+                  {{ section.settings.blog_description_right }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <!-- end bottom copy -->
+        </div>
+      </div>
+    </div>
+  </div>
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Blog pages",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "blog_show_tag_filter",
+      "label": "Show tag filter"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_rss",
+      "label": "Show RSS link"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_tags",
+      "label": "Show tags"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": "Show date",
+      "default": true
+    },
+ {
+      "type": "richtext",
+      "id": "blog_top_description",
+      "label": "Top blog description"
+    },
+ {
+      "type": "html",
+      "id": "blog_description_left",
+      "label": "Left blog description"
+    },
+ {
+      "type": "html",
+      "id": "blog_description_right",
+      "label": "Right blog description"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_comments",
+      "label": "Show comment count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_author",
+      "label": "Show author"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_excerpt",
+      "label": "Show excerpt"
+    },
+    {
+      "type": "select",
+      "id": "blog_image_size",
+      "label": "Image size",
+      "default": "wide",
+      "options": [
+        {
+          "value": "natural",
+          "label": "Natural"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "wide",
+          "label": "Wide (16:9)"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .bottom-content-wrap a{
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,0,0,.15);
+  }
+  .bottom-content-wrap {
+      display: flex;
+      justify-content: space-between;
+  	width: 100%;
+  }
+  .bottom-content-right { width: 48%;}
+  .bottom-content-left { width: 48%;}
+  .top-collection-title-description h1 {
+    text-align: center !important;
+  }
+  @media screen and (max-width: 767px) {
+    .bottom-content-right, .bottom-content-left {
+      width: 100% !important;
+    }
+    .bottom-content-left {
+      margin-bottom: 30px !important;
+    }
+    .bottom-content-wrap {
+      flex-direction: column !important;
+    }
+  }
+
+    #shopify-section-blog-template .page-width.page-content {
+      padding-top: 0px;
+  }
+</style>

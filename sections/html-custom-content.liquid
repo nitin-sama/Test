@@ -1,0 +1,74 @@
+<div class="page-width">
+  <div class="grid grid--uniform">
+    {% for block in section.blocks %}
+      <div class="grid__item small--one-full medium-up--one-third">
+        {% if block.settings.custom_heading != blank %}
+        	<h2 class="heading">{{block.settings.custom_heading}}</h2>
+        {% endif %}
+        {% if block.settings.custom_body != blank %}
+          <div class="rte">
+        	<p class="">{{block.settings.custom_body}}</p>
+         </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+<style>
+  .small--one-half, .medium-up--one-third {
+    text-align: center;
+  }
+  h2.heading {
+    line-height: 33px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  #shopify-section-1639678954e581e307 {
+    margin-top: 75px;
+  }
+  #shopify-section-1525878145666 {
+    margin-top: 75px;
+  }
+</style>
+
+
+
+{% schema %}
+  {
+    "name": "HTML Content",
+    "settings": [
+	],
+	"blocks": [
+		{
+          "name": "Custom HTML Content",
+          "type": "text",
+          "settings": [
+              {
+                "type": "text",
+                "id": "custom_heading",
+                "label": "Add custom content"
+              },
+              {
+                "type": "richtext",
+                "id": "custom_body",
+                "label": "Add Paragraph"
+              }
+		  ]
+		}
+	],
+	"presets": [
+      {
+        "name": "HTML Content",
+        "category": "Advanced layout"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

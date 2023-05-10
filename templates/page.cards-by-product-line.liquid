@@ -1,0 +1,113 @@
+{% assign descriptions = page.content | split: "<!-- split -->" %}
+{% assign short_desc = descriptions[0] %}
+{% assign long_desc = descriptions[1] %}
+
+<div class="page-width page-content cards-by-product-line">
+	<div class="grid">
+    <div class="grid__item medium-up--three-quarters medium-up--push-one-eighth">
+
+      <header class="section-header">
+        <h1 class="section-header__title" style="text-align: center;">{{ page.title }}</h1>
+      </header>
+
+      <div class="rte rte--nomargin">
+        {{ short_desc }}
+      </div>
+      <div class="collection-cards" style="margin-bottom: 50px;">
+        {% section 'cards-by-product-line' %}
+        <hr />
+        {% section 'cards-by-product-line1' %}
+        <hr />
+        {% section 'cards-by-product-line2' %}
+        <hr />
+        {% section 'cards-by-product-line3' %}
+      </div>
+      <div class="rte rte--nomargin">
+        {{ long_desc }}
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<style>
+  .cards-by-product-line .collection-cards .collection-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.cards-by-product-line .collection-box-wrap{
+    width: 100%;
+    margin-bottom: 0;
+        border: none;
+}
+
+.cards-by-product-line .media_wrap {
+    padding: 0 !important;
+}
+
+.cards-by-product-line .collection_title {
+    text-align: center;
+    background-color: #28675C;
+    color: white
+}
+  .cards-by-product-line .collection_title {
+    border:  1px solid gray;
+    padding: 5px 0;
+    text-transform: uppercase;
+}
+
+.cards-by-product-line .media_wrap {
+    height: 165px;
+}
+
+.cards-by-product-line .media_wrap img {
+    width: 260px;
+  height: 165px;
+  object-fit: cover;
+}
+
+@media(max-width: 700px){
+    .cards-by-product-line .collection-cards .collection-wrap {
+    grid-template-columns: 1fr 1fr;
+}
+
+  .cards-by-product-line .media_wrap {
+    height: 120px;
+}
+
+.cards-by-product-line .media_wrap img {
+    width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+}
+
+.cards-by-product-line hr {
+    margin: 40px 0;
+}
+  
+  .collection-box__shopall a{
+    background-color: #00AC5C;
+    color: white;
+    text-transform: uppercase;
+    padding: 10px 10px;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 300px;
+    margin: auto;
+    border: 1px solid#00AC5C;
+}
+
+.collection-box__shopall a:hover{
+    background-color: white;
+    color: #00AC5C;
+    border: 1px solidwhite;
+    transition: 0.3s;
+}
+</style>

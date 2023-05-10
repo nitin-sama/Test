@@ -1,0 +1,77 @@
+{%- unless grid_item_width -%}
+  {%- assign grid_item_width = 'medium-up--one-quarter small--one-half' -%}
+{%- endunless -%}
+
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price > product.price -%}
+  {%- assign on_sale = true -%}
+{%- endif -%}
+
+{%- assign sold_out = true -%}
+{%- if product.available -%}
+  {%- assign sold_out = false -%}
+{%- endif -%}
+
+{%- assign product_tags = product.tags | join: ',' -%}
+{%- assign has_custom_label = false -%}
+{%- if product_tags contains '_label_' -%}
+  {%- for tag in product.tags -%}
+    {%- if tag contains '_label_' -%}
+      {%- assign tag_starts_with = tag | slice: 0 -%}
+      {%- if tag_starts_with == '_' -%}
+        {%- assign has_custom_label = true -%}
+        {%- assign custom_label = tag | replace: '_label_', '' -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+<style>.grid-product__price--savings{display:none;}
+  .gsclogo {
+    display:none;
+  }
+
+.presale__grid .grid-product__content.presale{
+    list-style-type: none;
+}
+
+        ul.grid-product__content.presale li{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+span.released-date {
+    min-width: 100px;
+}
+
+.grid-product__meta .grid-product__title.grid-product__title--heading:hover {
+    color: #03AA5A;rgb(9,100,85)
+}
+
+.grid-product__meta .grid-product__title.grid-product__title--heading {
+    color:rgb(9,100,85);
+}
+
+</style>
+<div class="presale__grid">
+  <ul class="grid-product__content presale">
+    <li>
+      <!-- add released date -->
+      {% if product.metafields.my_fields.new_released_date != blank %}
+        <span class="released-date">{{product.metafields.my_fields.new_released_date | date: "%m / %d / %Y" }}</span>
+      {% endif %}
+      <span class="product_title_wrap">
+        <a href="{{ product.url }}" class="grid-product__link {% if sold_out %} grid-product__link--disabled{% endif %}">
+          <div class="grid-product__meta">
+            <div class="grid-product__title grid-product__title--{{ settings.type_product_style }}">
+              {{ product.title }}
+            </div>
+            {%- if settings.enable_product_reviews -%}
+              <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+            {%- endif -%}
+          </div>
+        </a>
+      </span>
+    </li>
+  </ul>
+</div>

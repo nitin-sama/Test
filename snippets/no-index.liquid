@@ -1,0 +1,19 @@
+{% if request.path contains "/blog/tagged/sports-cards" %}
+	<meta name="robots" content="noindex">
+{% endif %}
+
+{% if request.path contains "/blog/tagged/baseball-cards" %}
+	<meta name="robots" content="noindex">
+{% endif %}
+
+{% if request.path contains "/blog/tagged/sports-collector" %}
+	<meta name="robots" content="noindex">
+{% endif %}
+
+{% if request.path contains "/blog/tagged/collectors" %}
+	<meta name="robots" content="noindex">
+{% endif %}
+
+{% if current_tags %}
+    <meta name="robots" content="noindex">
+{% endif %}

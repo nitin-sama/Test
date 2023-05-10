@@ -1,0 +1,151 @@
+<div class="top-content">
+  {% if section.settings.top-content != blank %}
+  	{{section.settings.top-content}}
+  {% endif %}
+</div>
+<div class="collection-wrap">
+  {% for block in section.blocks %}
+  	{% assign collection = block.settings.collection %}
+      <div class="collection-box-wrap collection-item collection-item--overlaid aos-init aos-animate">
+          <a href="{{block.settings.collection-link}}">
+            <div class="media_wrap">
+              <img src="{{block.settings.collection-pic | img_url: '2048x'}}" />
+          	</div>
+          <div class="collection_title">
+              <p>{{collection.title}}</p>
+          </div></a>
+      </div>
+  {% endfor %}
+</div>
+
+<div class="bottom-content">
+	<div class="bottom-content-wrap">
+      <div class="bottom-content-left">
+		{% if section.settings.bottom-content-left != blank %}
+        	{{section.settings.bottom-content-left}}
+        {% endif %}
+      </div>
+      <div class="bottom-content-right">
+		{% if section.settings.bottom-content-right != blank %}
+        	{{section.settings.bottom-content-right}}
+        {% endif %}
+      </div>
+	</div>
+</div>
+
+<style>
+.breadcrumb {
+  text-align: center;
+ }
+.section-header {
+  text-align: center;
+}
+.collection-wrap {
+  display: flex;
+  margin: 0 auto;
+  max-width: 540px;
+  justify-content: space-between;
+  margin-top: 35px;
+  margin-bottom: 40px;
+}
+.collection-box-wrap {
+  border: 1px solid #ddd;
+  text-align: center;
+  width: 48%;
+  cursor: pointer;
+}
+.media_wrap {
+    padding: 40px;
+}
+.collection-box-wrap:hover .collection_title {
+  position: relative;
+  top: -40%;
+  z-index: 1000;
+}
+.collection-box-wrap  p {
+  margin-bottom: 0;
+}
+.bottom-content {
+  float: left;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.bottom-content-wrap {
+    display: flex;
+    justify-content: space-between;
+}
+.bottom-content-right { width: 49%;}
+.bottom-content-left { width: 49%;}
+.top-collection-title-description h1 {
+  text-align: center !important;
+}
+  .collection_title{
+    background: #28675c;
+    color: #fff;
+    text-transform: uppercase;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+@media screen and (max-width: 767px) {
+  .bottom-content-right, .bottom-content-left {
+    width: 100% !important;
+  }
+  .bottom-content-left {
+    margin-bottom: 30px !important;
+  }
+  .bottom-content-wrap {
+    flex-direction: column !important;
+  } 
+}
+</style>
+
+
+
+{% schema %}
+  {
+    "name": "Shop by brand",
+    "settings": [
+		{
+			"type": "richtext",
+			"id": "top-content",
+			"label": "Add top content here"
+		},
+		{
+			"type": "html",
+			"id": "bottom-content-left",
+			"label": "Add top content here"
+		},
+		{
+			"type": "html",
+			"id": "bottom-content-right",
+			"label": "Add top content here"
+		}
+	],
+	"blocks": [
+		{
+			"type": "collections",
+			"name": "Shop by brand collections",
+			"settings": [
+				{
+					"type": "collection",
+					"id": "collection",
+					"label": "Add collection"
+				},
+				{
+					"type": "image_picker",
+					"id": "collection-pic",
+					"label": "Select collection image"
+				},
+				{
+					"type": "url",
+					"id": "collection-link",
+					"label": "Add Collection Link"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+
+
